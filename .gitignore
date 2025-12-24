@@ -40,3 +40,9 @@ tfplan
 templates/platform_landing_zone/examples/test/*
 tfplan.txt
 test.auto.tfvars
+
+# Eirctl
+eirctl.env
+
+# JUnit
+**/results.xml
