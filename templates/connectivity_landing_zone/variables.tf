@@ -5,6 +5,10 @@ variable "starter_locations" {
     condition     = length(var.starter_locations) > 0
     error_message = "You must provide at least one starter location region."
   }
+  validation {
+    condition     = var.connectivity_type == "none" || ((length(var.virtual_hubs) <= length(var.starter_locations)) || (length(var.hub_virtual_networks) <= length(var.starter_locations)))
+    error_message = "The number of regions supplied in `starter_locations` must match the number of regions specified for connectivity."
+  }
 }
 
 variable "starter_locations_short" {
@@ -36,21 +40,10 @@ variable "subscription_ids" {
   }
 }
 
-variable "root_parent_management_group_id" {
-  type        = string
-  default     = ""
-  description = "This is the id of the management group that the ALZ hierarchy will be nested under, will default to the Tenant Root Group"
-}
-
 variable "enable_telemetry" {
   type        = bool
   default     = false
-  description = <<DESCRIPTION
-This variable controls whether or not telemetry is enabled for the module.
-For more information see <https://aka.ms/avm/telemetryinfo>.
-If it is set to false, then no telemetry will be collected.
-DESCRIPTION
-  nullable    = false
+  description = "This variable controls whether or not telemetry is enabled for the module. For more information see <https://aka.ms/avm/telemetryinfo>. If it is set to false, then no telemetry will be collected."
 }
 
 variable "custom_replacements" {

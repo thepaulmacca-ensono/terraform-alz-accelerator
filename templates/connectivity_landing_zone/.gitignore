@@ -1,9 +1,19 @@
 # Local .terraform directories
 .terraform/
 
+# .tfplan files
+tfplan
+*.tfplan
+*.tfplan.*
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+# .outputs files
+*.tfoutputs
+*.tfoutputs.*
+tfoutputs.*
 
 # Crash log files
 crash.log
@@ -41,10 +51,3 @@ terraform.rc
 
 # Ignore ALZ Specific files and folders
 .alzlib
-
-# Ignore ALZ Migration specific files and folders
-tfplan
-tfplan.json
-resources.json
-issues.json
-issues.csv

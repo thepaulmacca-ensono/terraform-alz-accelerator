@@ -3,13 +3,11 @@
 This file contains built-in replacements to avoid repeating the same hard-coded values.
 Replacements are denoted by the dollar-dollar curly braces token (e.g. $${starter_location_01}). The following details each built-in replacements that you can use:
 `starter_location_01`: This the primary Azure location sourced from the `starter_locations` variable. This can be used to set the location of resources.
-`starter_location_02` to `starter_location_##`: These are the secondary Azure locations sourced from the `starter_locations` variable. This can be used to set the location of resources.
 `starter_location_01_short`: Short code for the primary Azure location. Defaults to the region geo_code, or short_name if no geo_code is available. Can be overridden via the starter_locations_short variable.
-`starter_location_02_short` to `starter_location_##_short`: Short codes for the secondary Azure locations. Same behavior and override rules as starter_location_01_short.
 `root_parent_management_group_id`: This is the id of the management group that the ALZ hierarchy will be nested under.
-`subscription_id_management`: The subscription ID of the subscription to deploy the management resources to, sourced from the variable `subscription_ids`.
 `subscription_id_connectivity`: The subscription ID of the subscription to deploy the connectivity resources to, sourced from the variable `subscription_ids`.
 `subscription_id_identity`: The subscription ID of the subscription to deploy the identity resources to, sourced from the variable `subscription_ids`.
+`subscription_id_management`: The subscription ID of the subscription to deploy the management resources to, sourced from the variable `subscription_ids`.
 `subscription_id_security`: The subscription ID of the subscription to deploy the security resources to, sourced from the variable `subscription_ids`.
 */
 
@@ -18,7 +16,7 @@ Replacements are denoted by the dollar-dollar curly braces token (e.g. $${starte
 You can define the Azure regions to use throughout the configuration.
 The first location will be used as the primary location, the second as the secondary location, and so on.
 */
-starter_locations = ["uksouth"]
+starter_locations = ["<region-1>"]
 
 /*
 --- Custom Replacements ---
@@ -36,12 +34,12 @@ custom_replacements = {
     defender_email_security_contact = "replace_me@replace_me.com"
 
     # Resource group names
-    management_resource_group_name = "rg-management-$${starter_location_01_short}"
+    management_resource_group_name = "rg-mgmt-$${starter_location_01_short}"
     asc_export_resource_group_name = "rg-asc-export-$${starter_location_01_short}"
 
     # Resource names
-    log_analytics_workspace_name            = "law-management-$${starter_location_01_short}"
-    ama_user_assigned_managed_identity_name = "uami-management-ama-$${starter_location_01_short}"
+    log_analytics_workspace_name            = "law-mgmt-$${starter_location_01_short}"
+    ama_user_assigned_managed_identity_name = "uami-mgmt-ama-$${starter_location_01_short}"
     dcr_change_tracking_name                = "dcr-change-tracking"
     dcr_defender_sql_name                   = "dcr-defender-sql"
     dcr_vm_insights_name                    = "dcr-vm-insights"
@@ -131,10 +129,6 @@ management_group_settings = {
     log_analytics_workspace_id                  = "$${log_analytics_workspace_id}"
   }
   subscription_placement = {
-    management = {
-      subscription_id       = "$${subscription_id_management}"
-      management_group_name = "management"
-    }
     connectivity = {
       subscription_id       = "$${subscription_id_connectivity}"
       management_group_name = "connectivity"
@@ -142,6 +136,10 @@ management_group_settings = {
     identity = {
       subscription_id       = "$${subscription_id_identity}"
       management_group_name = "identity"
+    }
+    management = {
+      subscription_id       = "$${subscription_id_management}"
+      management_group_name = "management"
     }
     security = {
       subscription_id       = "$${subscription_id_security}"
@@ -194,6 +192,7 @@ management_group_settings = {
       }
     }
   }
+
   /*
   # Example of how to add management group role assignments
   management_group_role_assignments = {
@@ -204,5 +203,6 @@ management_group_settings = {
     }
   }
   */
+
   # role_assignment_name_use_random_uuid = false  # Uncomment this for backwards compatibility with previous naming convention
 }

@@ -23,10 +23,11 @@ The module is intended to be used with the [Azure Landing Zones Accelerator](htt
 Create a `terraform.tfvars` file in the root of the module directory with the following content, replacing the placeholders with the actual values:
 
 ```hcl
-subscription_ids = {
-  "management"   = "00000000-0000-0000-0000-000000000000",
-  "connectivity" = "00000000-0000-0000-0000-000000000000",
-  "identity"     = "00000000-0000-0000-0000-000000000000",
+starter_locations = ["uksouth"]
+subscription_ids  = {
+  "management"    = "00000000-0000-0000-0000-000000000000",
+  "connectivity"  = "00000000-0000-0000-0000-000000000000",
+  "identity"      = "00000000-0000-0000-0000-000000000000",
 }
 ```
 

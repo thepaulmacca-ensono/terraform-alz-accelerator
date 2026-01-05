@@ -1,10 +1,11 @@
-# Platform Landing Zone - Management Only
+# Management Landing Zone
 
 This example configuration deploys the management groups and management resources only
 
-- Management Groups
-- Policy
-- Management Resources
+- Management group hierarchy
+- Azure Policy definitions and assignments
+- Role definitions
+- Management resources, including Log Analytics workspace and Automation account
 
 ## Documentation
 

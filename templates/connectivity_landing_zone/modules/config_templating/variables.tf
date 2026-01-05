@@ -11,28 +11,7 @@ variable "starter_locations_short" {
 
 variable "subscription_id_connectivity" {
   type        = string
-  description = "value of the subscription id for the Connectivity subscription"
-}
-
-variable "subscription_id_identity" {
-  type        = string
-  description = "value of the subscription id for the Identity subscription"
-}
-
-variable "subscription_id_management" {
-  type        = string
-  description = "value of the subscription id for the Management subscription"
-}
-
-variable "subscription_id_security" {
-  type        = string
-  description = "value of the subscription id for the Security subscription"
-}
-
-variable "root_parent_management_group_id" {
-  type        = string
-  default     = ""
-  description = "This is the id of the management group that the ALZ hierarchy will be nested under, will default to the Tenant Root Group"
+  description = "Value of the subscription id for the Connectivity subscription"
 }
 
 variable "custom_replacements" {
