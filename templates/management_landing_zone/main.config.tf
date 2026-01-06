@@ -3,8 +3,8 @@ module "config" {
 
   starter_locations               = var.starter_locations
   starter_locations_short         = var.starter_locations_short
-  subscription_id_connectivity    = var.subscription_ids["connectivity"]
-  subscription_id_identity        = var.subscription_ids["identity"]
+  subscription_id_connectivity    = try(var.subscription_ids["connectivity"], "")
+  subscription_id_identity        = try(var.subscription_ids["identity"], "")
   subscription_id_management      = var.subscription_ids["management"]
   subscription_id_security        = try(var.subscription_ids["security"], "")
   root_parent_management_group_id = var.root_parent_management_group_id

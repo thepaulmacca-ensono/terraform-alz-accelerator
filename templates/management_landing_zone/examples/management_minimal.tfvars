@@ -4,11 +4,7 @@ This file contains built-in replacements to avoid repeating the same hard-coded 
 Replacements are denoted by the dollar-dollar curly braces token (e.g. $${starter_location_01}). The following details each built-in replacements that you can use:
 `starter_location_01`: This the primary Azure location sourced from the `starter_locations` variable. This can be used to set the location of resources.
 `starter_location_01_short`: Short code for the primary Azure location. Defaults to the region geo_code, or short_name if no geo_code is available. Can be overridden via the starter_locations_short variable.
-`root_parent_management_group_id`: This is the id of the management group that the ALZ hierarchy will be nested under.
-`subscription_id_connectivity`: The subscription ID of the subscription to deploy the connectivity resources to, sourced from the variable `subscription_ids`.
-`subscription_id_identity`: The subscription ID of the subscription to deploy the identity resources to, sourced from the variable `subscription_ids`.
 `subscription_id_management`: The subscription ID of the subscription to deploy the management resources to, sourced from the variable `subscription_ids`.
-`subscription_id_security`: The subscription ID of the subscription to deploy the security resources to, sourced from the variable `subscription_ids`.
 */
 
 /*
@@ -104,105 +100,4 @@ management_resource_settings = {
       name = "$${dcr_vm_insights_name}"
     }
   }
-}
-
-/*
---- Management Groups and Policy ---
-You can use this section to customize the management groups and policies that will be deployed.
-You can further configure management groups and policy by supplying a `lib` folder. This is detailed in the Accelerator documentation.
-*/
-management_groups_enabled = true
-
-management_group_settings = {
-  enabled = true
-  # This is the name of the architecture that will be used to deploy the management resources.
-  # It refers to the alz_custom.alz_architecture_definition.yaml file in the lib folder.
-  # Do not change this value unless you have created another architecture definition
-  # with the name value specified below.
-  architecture_name  = "alz_custom"
-  location           = "$${starter_location_01}"
-  parent_resource_id = "$${root_parent_management_group_id}"
-  policy_default_values = {
-    ama_change_tracking_data_collection_rule_id = "$${ama_change_tracking_data_collection_rule_id}"
-    ama_mdfc_sql_data_collection_rule_id        = "$${ama_mdfc_sql_data_collection_rule_id}"
-    ama_vm_insights_data_collection_rule_id     = "$${ama_vm_insights_data_collection_rule_id}"
-    ama_user_assigned_managed_identity_id       = "$${ama_user_assigned_managed_identity_id}"
-    ama_user_assigned_managed_identity_name     = "$${ama_user_assigned_managed_identity_name}"
-    log_analytics_workspace_id                  = "$${log_analytics_workspace_id}"
-  }
-  subscription_placement = {
-    connectivity = {
-      subscription_id       = "$${subscription_id_connectivity}"
-      management_group_name = "connectivity"
-    }
-    identity = {
-      subscription_id       = "$${subscription_id_identity}"
-      management_group_name = "identity"
-    }
-    management = {
-      subscription_id       = "$${subscription_id_management}"
-      management_group_name = "management"
-    }
-    security = {
-      subscription_id       = "$${subscription_id_security}"
-      management_group_name = "security"
-    }
-  }
-  policy_assignments_to_modify = {
-    alz = {
-      policy_assignments = {
-        Deploy-MDFC-Config-H224 = {
-          parameters = {
-            ascExportResourceGroupName                  = "$${asc_export_resource_group_name}"
-            ascExportResourceGroupLocation              = "$${starter_location_01}"
-            emailSecurityContact                        = "$${defender_email_security_contact}"
-            enableAscForServers                         = "DeployIfNotExists"
-            enableAscForServersVulnerabilityAssessments = "DeployIfNotExists"
-            enableAscForSql                             = "DeployIfNotExists"
-            enableAscForAppServices                     = "DeployIfNotExists"
-            enableAscForStorage                         = "DeployIfNotExists"
-            enableAscForContainers                      = "DeployIfNotExists"
-            enableAscForKeyVault                        = "DeployIfNotExists"
-            enableAscForSqlOnVm                         = "DeployIfNotExists"
-            enableAscForArm                             = "DeployIfNotExists"
-            enableAscForOssDb                           = "DeployIfNotExists"
-            enableAscForCosmosDbs                       = "DeployIfNotExists"
-            enableAscForCspm                            = "DeployIfNotExists"
-          }
-        }
-      }
-    }
-    connectivity = {
-      policy_assignments = {
-        Enable-DDoS-VNET = {
-          enforcement_mode = "DoNotEnforce"
-        }
-      }
-    }
-    landingzones = {
-      policy_assignments = {
-        Enable-DDoS-VNET = {
-          enforcement_mode = "DoNotEnforce"
-        }
-      }
-    }
-    corp = {
-      policy_assignments = {
-        Deploy-Private-DNS-Zones = {
-          enforcement_mode = "DoNotEnforce"
-        }
-      }
-    }
-  }
-
-  /*
-  # Example of how to add management group role assignments
-  management_group_role_assignments = {
-    root_owner_role_assignment = {
-      management_group_name      = "root"
-      role_definition_id_or_name = "Owner"
-      principal_id               = "00000000-0000-0000-0000-000000000000"
-    }
-  }
-  */
 }
