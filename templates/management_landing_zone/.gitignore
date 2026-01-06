@@ -46,8 +46,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# Ignore ALZ Specific Terraform files
-.terraform.lock.hcl
-
 # Ignore ALZ Specific files and folders
 .alzlib

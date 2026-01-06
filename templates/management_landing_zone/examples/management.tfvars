@@ -16,7 +16,7 @@ Replacements are denoted by the dollar-dollar curly braces token (e.g. $${starte
 You can define the Azure regions to use throughout the configuration.
 The first location will be used as the primary location, the second as the secondary location, and so on.
 */
-starter_locations = ["<region-1>"]
+starter_locations = ["uksouth"]
 
 /*
 --- Custom Replacements ---
@@ -76,7 +76,7 @@ This variable can be used to apply tags to all resources that support it. Some r
 */
 tags = {
   deployed_by = "terraform"
-  source      = "Azure Landing Zones Accelerator"
+  source      = "Azure Landing Zones Management Module"
 }
 
 /*

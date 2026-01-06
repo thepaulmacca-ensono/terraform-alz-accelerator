@@ -4,7 +4,7 @@ variable "management_resources_enabled" {
   description = <<DESCRIPTION
 Enable or disable the deployment of management resources.
 
-When set to `true`, management resources such as Log Analytics Workspace, Automation Account, and monitoring solutions will be deployed according to the `management_resource_settings` variable.
+When set to `true`, management resources such as log analytics workspace, automation account, and monitoring solutions will be deployed according to the `management_resource_settings` variable.
 When set to `false`, no management resources will be deployed.
 
 Defaults to `true`.
@@ -81,7 +81,7 @@ variable "management_resource_settings" {
   })
   default     = null
   description = <<DESCRIPTION
-The settings for the management resources. This object configures the Azure Landing Zone management resources including Log Analytics, Automation Account, and monitoring solutions.
+The settings for the management resources. This object configures the Azure Landing Zone management resources including log analytics workspace, automation account, and monitoring solutions.
 
 Properties:
 - `automation_account_name` - (Optional) The name of the Automation Account.
