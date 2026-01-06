@@ -22,9 +22,9 @@ DESCRIPTION
 }
 
 variable "subscription_ids" {
-  description = "The list of subscription IDs to deploy the Platform Landing Zones into"
   type        = map(string)
   default     = {}
+  description = "The list of subscription IDs to deploy the Platform Landing Zones into"
   nullable    = false
   validation {
     condition     = length(var.subscription_ids) == 0 || alltrue([for id in values(var.subscription_ids) : can(regex("^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$", id))])
