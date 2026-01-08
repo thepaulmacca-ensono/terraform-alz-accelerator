@@ -13,10 +13,17 @@ Replacements are denoted by the dollar-dollar curly braces token (e.g. $${starte
 
 /*
 --- Starter Locations ---
-You can define the Azure regions to use throughout the configuration.
-The first location will be used as the primary location, the second as the secondary location, and so on.
+You can define the Azure region to use throughout the configuration.
 */
 starter_locations = ["uksouth"]
+
+/*
+--- Company Name ---
+This variable is used by the naming modules to generate resource names.
+The name is truncated to the first 3 characters by default in the modules.
+This is due to the Ensono client "tricode" which is a 3 letter code assigned to managed clients in ServiceNow. This is normally decided by the onboarding team for new clients.
+*/
+company_name = "ensono"
 
 /*
 --- Custom Replacements ---
@@ -34,12 +41,10 @@ custom_replacements = {
     defender_email_security_contact = "replace_me@replace_me.com"
 
     # Resource group names
-    management_resource_group_name = "rg-mgmt-$${starter_location_01_short}"
     asc_export_resource_group_name = "rg-asc-export-$${starter_location_01_short}"
 
     # Resource names
-    log_analytics_workspace_name            = "log-mgmt-$${starter_location_01_short}"
-    ama_user_assigned_managed_identity_name = "uai-mgmt-ama-$${starter_location_01_short}"
+    ama_user_assigned_managed_identity_name = "uai-ama"
     dcr_change_tracking_name                = "dcr-change-tracking"
     dcr_defender_sql_name                   = "dcr-defender-sql"
     dcr_vm_insights_name                    = "dcr-vm-insights"
@@ -63,9 +68,9 @@ custom_replacements = {
   */
   resource_identifiers = {
     ama_change_tracking_data_collection_rule_id = "$${management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/$${dcr_change_tracking_name}"
-    ama_mdfc_sql_data_collection_rule_id        = "$${management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/$${dcr_defender_sql_name}"
-    ama_vm_insights_data_collection_rule_id     = "$${management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/$${dcr_vm_insights_name}"
+    ama_defender_sql_data_collection_rule_id    = "$${management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/$${dcr_defender_sql_name}"
     ama_user_assigned_managed_identity_id       = "$${management_resource_group_id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/$${ama_user_assigned_managed_identity_name}"
+    ama_vm_insights_data_collection_rule_id     = "$${management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/$${dcr_vm_insights_name}"
     log_analytics_workspace_id                  = "$${management_resource_group_id}/providers/Microsoft.OperationalInsights/workspaces/$${log_analytics_workspace_name}"
   }
 }
@@ -84,10 +89,7 @@ tags = {
 You can use this section to customize the management resources that will be deployed.
 */
 management_resource_settings = {
-  enabled                      = true
-  location                     = "$${starter_location_01}"
-  log_analytics_workspace_name = "$${log_analytics_workspace_name}"
-  resource_group_name          = "$${management_resource_group_name}"
+  location = "$${starter_location_01}"
   user_assigned_managed_identities = {
     ama = {
       name = "$${ama_user_assigned_managed_identity_name}"
@@ -114,7 +116,6 @@ You can further configure management groups and policy by supplying a `lib` fold
 management_groups_enabled = true
 
 management_group_settings = {
-  enabled = true
   # This is the name of the architecture that will be used to deploy the management resources.
   # It refers to the alz_custom.alz_architecture_definition.yaml file in the lib folder.
   # Do not change this value unless you have created another architecture definition
@@ -124,10 +125,10 @@ management_group_settings = {
   parent_resource_id = "$${root_parent_management_group_id}"
   policy_default_values = {
     ama_change_tracking_data_collection_rule_id = "$${ama_change_tracking_data_collection_rule_id}"
-    ama_mdfc_sql_data_collection_rule_id        = "$${ama_mdfc_sql_data_collection_rule_id}"
-    ama_vm_insights_data_collection_rule_id     = "$${ama_vm_insights_data_collection_rule_id}"
+    ama_defender_sql_data_collection_rule_id    = "$${ama_defender_sql_data_collection_rule_id}"
     ama_user_assigned_managed_identity_id       = "$${ama_user_assigned_managed_identity_id}"
     ama_user_assigned_managed_identity_name     = "$${ama_user_assigned_managed_identity_name}"
+    ama_vm_insights_data_collection_rule_id     = "$${ama_vm_insights_data_collection_rule_id}"
     log_analytics_workspace_id                  = "$${log_analytics_workspace_id}"
   }
   subscription_placement = {

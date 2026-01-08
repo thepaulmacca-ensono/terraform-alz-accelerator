@@ -5,26 +5,26 @@ variable "management_resource_settings" {
     log_analytics_workspace_name = optional(string)
     resource_group_name          = optional(string)
     data_collection_rules = optional(object({
-      change_tracking = object({
+      change_tracking = optional(object({
         enabled  = optional(bool, true)
         name     = string
         location = optional(string)
         tags     = optional(map(string))
-      })
-      vm_insights = object({
+      }), { enabled = false, name = "" })
+      vm_insights = optional(object({
         enabled  = optional(bool, true)
         name     = string
         location = optional(string)
         tags     = optional(map(string))
-      })
-      defender_sql = object({
+      }), { enabled = false, name = "" })
+      defender_sql = optional(object({
         enabled                                                = optional(bool, true)
         name                                                   = string
         location                                               = optional(string)
         tags                                                   = optional(map(string))
         enable_collection_of_sql_queries_for_security_research = optional(bool, false)
-      })
-    }))
+      }), { enabled = false, name = "" })
+    }), {})
     log_analytics_solution_plans = optional(list(object({
       product   = string
       publisher = optional(string)
@@ -58,13 +58,13 @@ variable "management_resource_settings" {
       }))
     }), {})
     user_assigned_managed_identities = optional(object({
-      ama = object({
-        enabled  = optional(bool)
+      ama = optional(object({
+        enabled  = optional(bool, true)
         name     = string
         location = optional(string)
         tags     = optional(map(string))
-      })
-    }))
+      }), { enabled = false, name = "" })
+    }), {})
   })
   default     = null
   description = <<DESCRIPTION
@@ -75,20 +75,20 @@ Properties:
 - `location` - (Required) The Azure region where the management resources will be deployed.
 - `log_analytics_workspace_name` - (Optional) The name of the Log Analytics Workspace.
 - `resource_group_name` - (Optional) The name of the resource group for management resources.
-- `data_collection_rules` - (Optional) Configuration for data collection rules:
-  - `change_tracking` - Configuration for change tracking data collection:
-    - `enabled` - (Optional) Enable or disable change tracking. Defaults to true.
-    - `name` - (Required) The name of the change tracking data collection rule.
+- `data_collection_rules` - (Optional) Configuration for data collection rules. Omit entirely to disable all DCRs:
+  - `change_tracking` - (Optional) Configuration for change tracking data collection. Omit to disable:
+    - `enabled` - (Optional) Enable or disable change tracking. Defaults to true when object is provided.
+    - `name` - (Required when enabled) The name of the change tracking data collection rule.
     - `location` - (Optional) The Azure region for the data collection rule.
     - `tags` - (Optional) A map of tags to assign to the resource.
-  - `vm_insights` - Configuration for VM insights data collection:
-    - `enabled` - (Optional) Enable or disable VM insights. Defaults to true.
-    - `name` - (Required) The name of the VM insights data collection rule.
+  - `vm_insights` - (Optional) Configuration for VM insights data collection. Omit to disable:
+    - `enabled` - (Optional) Enable or disable VM insights. Defaults to true when object is provided.
+    - `name` - (Required when enabled) The name of the VM insights data collection rule.
     - `location` - (Optional) The Azure region for the data collection rule.
     - `tags` - (Optional) A map of tags to assign to the resource.
-  - `defender_sql` - Configuration for Defender for SQL data collection:
-    - `enabled` - (Optional) Enable or disable Defender for SQL. Defaults to true.
-    - `name` - (Required) The name of the Defender SQL data collection rule.
+  - `defender_sql` - (Optional) Configuration for Defender for SQL data collection. Omit to disable:
+    - `enabled` - (Optional) Enable or disable Defender for SQL. Defaults to true when object is provided.
+    - `name` - (Required when enabled) The name of the Defender SQL data collection rule.
     - `location` - (Optional) The Azure region for the data collection rule.
     - `tags` - (Optional) A map of tags to assign to the resource.
     - `enable_collection_of_sql_queries_for_security_research` - (Optional) Enable collection of SQL queries for security research. Defaults to false.
@@ -100,7 +100,7 @@ Properties:
 - `log_analytics_workspace_daily_quota_gb` - (Optional) The daily ingestion quota in GB for the workspace.
 - `log_analytics_workspace_internet_ingestion_enabled` - (Optional) Enable internet ingestion for the workspace. Defaults to true.
 - `log_analytics_workspace_internet_query_enabled` - (Optional) Enable internet queries for the workspace. Defaults to true.
-- `log_analytics_workspace_local_authentication_disabled` - (Optional) Disable local authentication for the workspace. Defaults to false.
+- `log_analytics_workspace_local_authentication_enabled` - (Optional) Enable local authentication for the workspace. Defaults to true.
 - `log_analytics_workspace_reservation_capacity_in_gb_per_day` - (Optional) The reservation capacity in GB per day for the workspace.
 - `log_analytics_workspace_retention_in_days` - (Optional) The data retention period in days for the workspace.
 - `log_analytics_workspace_sku` - (Optional) The SKU of the Log Analytics Workspace.
@@ -119,10 +119,10 @@ Properties:
     - `delete` - (Optional) Timeout for delete operations.
     - `update` - (Optional) Timeout for update operations.
     - `read` - (Optional) Timeout for read operations.
-- `user_assigned_managed_identities` - (Optional) Configuration for user-assigned managed identities:
-  - `ama` - Configuration for Azure Monitor Agent managed identity:
-    - `enabled` - (Optional) Enable or disable the managed identity.
-    - `name` - (Required) The name of the managed identity.
+- `user_assigned_managed_identities` - (Optional) Configuration for user-assigned managed identities. Omit entirely to disable all:
+  - `ama` - (Optional) Configuration for Azure Monitor Agent managed identity. Omit to disable:
+    - `enabled` - (Optional) Enable or disable the managed identity. Defaults to true when object is provided.
+    - `name` - (Required when enabled) The name of the managed identity.
     - `location` - (Optional) The Azure region for the managed identity.
     - `tags` - (Optional) A map of tags to assign to the resource.
 

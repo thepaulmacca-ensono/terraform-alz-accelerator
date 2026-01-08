@@ -31,10 +31,12 @@ locals {
   custom_names_json_templated = templatestring(local.custom_names_json, local.built_in_replacements)
   custom_names_json_final     = replace(replace(replace(replace(local.custom_names_json_templated, "\"true\"", "true"), "\"false\"", "false"), "{{string_true}}", "\"true\""), "{{string_false}}", "\"false\"")
   custom_names                = jsondecode(local.custom_names_json_final)
+  # Merge naming module outputs with custom names - naming_outputs takes precedence
+  merged_names = merge(local.custom_names, var.naming_outputs)
 }
 
 locals {
-  custom_name_replacements = merge(local.built_in_replacements, local.custom_names)
+  custom_name_replacements = merge(local.built_in_replacements, local.merged_names)
 }
 
 # Custom resource group identifiers

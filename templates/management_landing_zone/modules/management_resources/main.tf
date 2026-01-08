@@ -3,8 +3,8 @@ module "management_resources" {
   version                                                    = "0.9.0"
   automation_account_name                                    = null
   location                                                   = var.management_resource_settings.location
-  log_analytics_workspace_name                               = coalesce(var.management_resource_settings.log_analytics_workspace_name, "law-management-${var.management_resource_settings.location}")
-  resource_group_name                                        = coalesce(var.management_resource_settings.resource_group_name, "rg-management-${var.management_resource_settings.location}")
+  log_analytics_workspace_name                               = var.management_resource_settings.log_analytics_workspace_name
+  resource_group_name                                        = var.management_resource_settings.resource_group_name
   data_collection_rules                                      = var.management_resource_settings.data_collection_rules
   enable_telemetry                                           = var.enable_telemetry
   linked_automation_account_creation_enabled                 = false

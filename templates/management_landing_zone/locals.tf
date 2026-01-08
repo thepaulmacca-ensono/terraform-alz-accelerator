@@ -10,6 +10,7 @@ locals {
   }
 }
 
+# Merge management group and resource settings with config module outputs
 locals {
   management_group_settings = merge(
     module.config.outputs.management_group_settings,
@@ -20,7 +21,29 @@ locals {
   management_resource_settings = merge(
     module.config.outputs.management_resource_settings,
     {
-      tags = coalesce(module.config.outputs.management_resource_settings.tags, module.config.outputs.tags)
+      resource_group_name          = local.naming_outputs.management_resource_group_name
+      log_analytics_workspace_name = local.naming_outputs.log_analytics_workspace_name
+      tags                         = coalesce(module.config.outputs.management_resource_settings.tags, module.config.outputs.tags)
     }
+  )
+}
+
+# Naming module outputs
+locals {
+  naming_outputs = (
+    var.naming_module == "azure_caf" ? {
+      # Resource group names
+      management_resource_group_name = module.naming_caf[0].resource_group.name
+
+      # Resource names
+      log_analytics_workspace_name = module.naming_caf[0].log_analytics_workspace.name
+    } :
+    var.naming_module == "stacks_foundation_azure" ? {
+      # Resource group names
+      management_resource_group_name = module.naming_stacks_foundation[0].names["management"].resource_group.name
+
+      # Resource names
+      log_analytics_workspace_name = module.naming_stacks_foundation[0].names["management"].log_analytics_workspace.name
+    } : {}
   )
 }

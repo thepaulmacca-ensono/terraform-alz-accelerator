@@ -1,4 +1,4 @@
-# Management Landing Zone
+# Management Landing Zone Example
 
 This example configuration deploys a management landing zone with:
 
@@ -12,10 +12,10 @@ This example configuration deploys a management landing zone with:
 There are two options for deploying the management landing zone:
 
 - Management Resources Only: [management_minimal.tfvars](management_minimal.tfvars)
-- Management Resources and Management Groups: [management.tfvars](management.tfvars)
+- Management Groups and Management Resources: [management.tfvars](management.tfvars)
 
 >[!NOTE]
-> If deploying Management Resources and Management Groups, ensure the `subscription_ids` variable is updated
+> If deploying Management Groups and Management Resources, ensure the `subscription_ids` variable is updated
 
 ## Documentation
 

@@ -5,17 +5,25 @@ terraform {
       source  = "Azure/alz"
       version = "0.20.1"
     }
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
     azapi = {
       source  = "Azure/azapi"
       version = "~> 2.0"
     }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
+    }
     local = {
       source  = "hashicorp/local"
       version = "~> 2.5"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.12"
     }
   }
   # backend "azurerm" {}

@@ -11,6 +11,9 @@ module "config" {
 
   custom_replacements = var.custom_replacements
 
+  # Pass naming module outputs to be merged with custom_replacements.names
+  naming_outputs = local.naming_outputs
+
   inputs = {
     management_resource_settings = var.management_resource_settings
     management_group_settings    = var.management_group_settings
