@@ -46,7 +46,6 @@ custom_replacements = {
     # Resource names
     ama_user_assigned_managed_identity_name = "uai-ama"
     dcr_change_tracking_name                = "dcr-change-tracking"
-    dcr_defender_sql_name                   = "dcr-defender-sql"
     dcr_vm_insights_name                    = "dcr-vm-insights"
   }
 
@@ -68,7 +67,6 @@ custom_replacements = {
   */
   resource_identifiers = {
     ama_change_tracking_data_collection_rule_id = "$${management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/$${dcr_change_tracking_name}"
-    ama_defender_sql_data_collection_rule_id    = "$${management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/$${dcr_defender_sql_name}"
     ama_user_assigned_managed_identity_id       = "$${management_resource_group_id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/$${ama_user_assigned_managed_identity_name}"
     ama_vm_insights_data_collection_rule_id     = "$${management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/$${dcr_vm_insights_name}"
     log_analytics_workspace_id                  = "$${management_resource_group_id}/providers/Microsoft.OperationalInsights/workspaces/$${log_analytics_workspace_name}"
@@ -99,9 +97,6 @@ management_resource_settings = {
     change_tracking = {
       name = "$${dcr_change_tracking_name}"
     }
-    defender_sql = {
-      name = "$${dcr_defender_sql_name}"
-    }
     vm_insights = {
       name = "$${dcr_vm_insights_name}"
     }
@@ -125,7 +120,6 @@ management_group_settings = {
   parent_resource_id = "$${root_parent_management_group_id}"
   policy_default_values = {
     ama_change_tracking_data_collection_rule_id = "$${ama_change_tracking_data_collection_rule_id}"
-    ama_defender_sql_data_collection_rule_id    = "$${ama_defender_sql_data_collection_rule_id}"
     ama_user_assigned_managed_identity_id       = "$${ama_user_assigned_managed_identity_id}"
     ama_user_assigned_managed_identity_name     = "$${ama_user_assigned_managed_identity_name}"
     ama_vm_insights_data_collection_rule_id     = "$${ama_vm_insights_data_collection_rule_id}"

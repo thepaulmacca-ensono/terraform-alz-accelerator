@@ -1,0 +1,4 @@
+compact: true
+evaluate-variables: false
+skip-check:
+  - CKV_TF_1
